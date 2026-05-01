@@ -1,0 +1,34 @@
+# ============================================================
+# Shallow Water Model — run parameters
+# Edit values here; units are shown in brackets.
+# ============================================================
+
+# ---- Physical parameters ----
+beta:         2.3e-11   # Coriolis gradient df/dy at equator   [m⁻¹ s⁻¹]
+g_prime:      0.02      # Reduced gravity g×Δρ/ρ₀              [m s⁻²]
+damping_days: 100     # Rayleigh damping e-folding time       [days]
+H_mean:       50.0      # Mean thermocline depth                [m]
+γ:            1e-8     # Walker-circulation coupling coefficient     [m⁻¹]
+
+# ---- Domain ----
+Lx: 6.0e6    # Zonal domain length                             [m]
+Ly: 2.0e6    # Meridional domain length, centred at equator    [m]
+nx: 512      # Grid cells in x (zonal)
+ny: 256      # Grid cells in y (meridional)
+
+# ---- Time stepping ----
+dt:   900  # Time step                                       [s]
+nt:   19200    # Total steps  (~800 days at dt=100 s)
+nout: 60      # Save a frame every nout steps
+
+# ---- ic : linear westward deepening × equatorial Gaussian trapping ----
+h_amp:   20.0    # Amplitude                                   [m]
+
+# ---- Open-ocean boundary (north/south) ----
+# Sponge damps all fields with a quadratic profile from zero at the
+# inner edge of the sponge zone to sponge_rate_days⁻¹ at the domain edge.
+sponge_width_frac: 0.01   # sponge width as fraction of Ly per side  [1]
+sponge_rate_days:  1    # e-folding time at the domain edge         [days]
+
+# ---- Animation ----
+framerate: 12    # Output frame rate                           [fps]
