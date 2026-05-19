@@ -8,9 +8,9 @@ using ParallelStencil
 using ParallelStencil.FiniteDifferences2D
 @init_parallel_stencil(CUDA, Float64, 2)
 
-include("src/config.jl")
-include("src/shallow_water.jl")
-include("src/visualize.jl")
+include("src/shallow_water_solver/config.jl")
+include("src/shallow_water_solver/shallow_water.jl")
+include("src/shallow_water_solver/visualize.jl")
 
 cfg = load_config(job_name)
 run_simulation(cfg)

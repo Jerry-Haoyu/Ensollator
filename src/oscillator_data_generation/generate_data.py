@@ -34,21 +34,21 @@ def simulate(params):
                    a=a, 
                    b=b, 
                    r=r)
-    model.simulate(save_fig=False)
+    model.simulate(save_fig=True)
 
 if __name__ == "__main__":
     n_worers = mp.cpu_count()
     
     #### Sampling Density #####
-    N_deltas = 20
-    N_as = 20
-    N_bs = 20
-    N_rs = 20
+    N_deltas = 5
+    N_as = 5
+    N_bs = 5
+    N_rs = 5
     ###########################
     
     params_list = []
     N=0
-    for delta in np.linspace(100.0, 500.0, N_deltas):
+    for delta in np.linspace(200.0, 500.0, N_deltas):
         for a in np.linspace(1e-2, 0.99, N_as):
             for b in np.linspace(1e-3, 1e-2, N_bs):
                 for r in np.linspace(1e-3, 1e-2, N_rs):

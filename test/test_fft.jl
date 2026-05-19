@@ -1,3 +1,12 @@
+"""
+---------------------------------
+BY : Claude Code
+Prompted BY: Haoyu Tang
+Github : Jerry_Haoyu 
+---------------------------------
+"""
+
+
 using Test
 
 include(joinpath(@__DIR__, "..", "src", "fft.jl"))

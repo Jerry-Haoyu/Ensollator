@@ -1,3 +1,13 @@
+"""
+---------------------------------
+BY : Claude Code
+Prompted/Reviewed BY: Haoyu Tang
+Github : Jerry_Haoyu 
+---------------------------------
+"""
+
+
+
 # ============================================================
 # Ocean-Atmosphere Coupled Shallow Water Equations
 # Ocean : Equatorial beta-plane, Arakawa C-grid, RK4

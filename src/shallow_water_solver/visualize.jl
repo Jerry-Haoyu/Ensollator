@@ -1,3 +1,12 @@
+"""
+---------------------------------
+BY : Claude Code
+Prompted/Reviewed BY: Haoyu Tang
+Github : Jerry_Haoyu 
+---------------------------------
+"""
+
+
 using CairoMakie
 using ProgressBars
 using JLD2
@@ -179,7 +188,7 @@ end
 # Auto-discovers any subdirectory that has both
 #   runs/<exp>/input/params.yml  and  runs/<exp>/output/h_frames.jld2
 # ============================================================
-function plot_fft(; runs_dir::String = "runs",
+function plot_fft(; runs_dir::String = "runs/shallow_water_simulator",
                     filename::String = "fft_power_spectrum.png")
     entries = sort(readdir(runs_dir))
     experiments = String[]
@@ -189,10 +198,11 @@ function plot_fft(; runs_dir::String = "runs",
         isfile(params_path) && isfile(h_path) && push!(experiments, entry)
     end
     isempty(experiments) && error("No experiments with h_frames.jld2 found under $runs_dir")
+    job_for(entry) = relpath(joinpath(runs_dir, entry), "runs")
 
     fig = Figure(size = (900, 500), fontsize = 13)
     ax  = Axis(fig[1, 1];
-        xlabel = "Frequency  [cycles / day]",
+        xlabel = "Frequency  [cycles / year]",
         ylabel = "Power",
         xscale = log10,
         yscale = log10,
@@ -201,15 +211,16 @@ function plot_fft(; runs_dir::String = "runs",
     palette = cgrad(:tab10, max(length(experiments), 2); categorical = true)
 
     for (i, job) in enumerate(experiments)
-        cfg          = load_config(job)
+        cfg          = load_config(job_for(job))
         series       = get_1d_time_series(cfg)
         dt_sample    = cfg.nout * cfg.dt                     # sampling interval [s]
         freqs, power = power_spectrum(series, dt_sample)
 
         # Drop DC bin so log-log axes are valid.
-        f_cpd = freqs[2:end] .* 86_400.0
+        f_cpy = freqs[2:end] .* (86_400.0 * 365.25)
         p     = power[2:end]
-        lines!(ax, f_cpd, p; color = palette[i], label = job)
+        lines!(ax, f_cpy, p; color = palette[i],
+               label = "Lx = $(round(Int, cfg.Lx / 1000)) km")
     end
 
     axislegend(ax, position = :rt)
@@ -219,7 +230,7 @@ function plot_fft(; runs_dir::String = "runs",
     println("FFT power spectrum saved → $out_file")
 end
 
-function plot_frequency_shift(; runs_dir::String = "runs",
+function plot_frequency_shift(; runs_dir::String = "runs/shallow_water_simulator",
                     filename::String = "frequency_shift.png")
     entries = sort(readdir(runs_dir))
     experiments = String[]
@@ -229,19 +240,20 @@ function plot_frequency_shift(; runs_dir::String = "runs",
         isfile(params_path) && isfile(h_path) && push!(experiments, entry)
     end
     isempty(experiments) && error("No experiments with h_frames.jld2 found under $runs_dir")
+    job_for(entry) = relpath(joinpath(runs_dir, entry), "runs")
 
     basin_width = Vector{Float64}(undef, length(experiments))
     dom_freqs   = Vector{Float64}(undef, length(experiments))
     for (i, job) in enumerate(experiments)
-        cfg          = load_config(job)
+        cfg          = load_config(job_for(job))
         series       = get_1d_time_series(cfg)
         dt_sample    = cfg.nout * cfg.dt                     # sampling interval [s]
         freqs, power = power_spectrum(series, dt_sample)
 
-        f_cpd          = freqs .* 86_400.0
+        f_cpy          = freqs .* (86_400.0 * 365.25)
         idx            = argmax(power[2:end]) + 1            # skip DC bin
         basin_width[i] = cfg.Lx
-        dom_freqs[i]   = f_cpd[idx]
+        dom_freqs[i]   = f_cpy[idx]
     end
 
     order       = sortperm(basin_width)
@@ -256,11 +268,11 @@ function plot_frequency_shift(; runs_dir::String = "runs",
     fig = Figure(size = (900, 500), fontsize = 13)
     ax  = Axis(fig[1, 1];
         xlabel = "Basin Width  [m]",
-        ylabel = "Frequency  [cycles / day]",
+        ylabel = "Frequency  [cycles / year]",
         xscale = log10,
         yscale = log10,
         title  = "Variation Of Dominant Mode Frequency To Basin Width (loglog Plot)")
-    scatter!(ax, basin_width, dom_freqs; color = :black, label)
+    scatter!(ax, basin_width, dom_freqs; color = :black)
     lines!(ax,   basin_width, freq_fit;
         color = :crimson,
         label = L"\log_{10}(f) = %$(round(slope, digits=2)) \cdot \log_{10}(L_x) + %$(round(intercept, digits=2))"

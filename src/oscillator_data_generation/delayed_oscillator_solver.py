@@ -68,6 +68,7 @@ class delayedOscillatorSolver:
         ax.set_title(rf"$a={self.a:.3f}$,$b={self.b:.3f}$,$r={self.r:.3f}$ $\delta={(self.delta):.0f}$")
         
         fig.savefig(os.path.join(self.out_dir, "time_series"))
+        plt.close()
     
     def simulate(self, save_fig=True, save_data=True):
         while self.i< self.total_steps:
@@ -84,15 +85,15 @@ class delayedOscillatorSolver:
         
         data = self.Ts
         
-        params = {
-            'a' : self.a, 
-            'b' : self.b, 
-            'r' : self.r,
-            'delta' : self.delta 
-        }
+        params = np.array([self.a, self.b, self.r, self.delta])
+        
+        dt = self.dt
         
         if save_data :
-            np.savez(os.path.join(self.out_dir, "data.npy"), params=params, data=data)
+            np.savez(os.path.join(self.out_dir, "data"), 
+                     params=params, 
+                     data=data, 
+                     dt=dt)
             
         if save_fig :
             self._plot_and_save()
