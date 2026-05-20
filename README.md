@@ -1,5 +1,6 @@
 # Ensollator 
 
+
 <!-- ## Project Description 
 ### The Climate Context
 The El Niño Southern Oscillation (ENSO) is a unique and prominent intrinsic variability (i.e., free of external forcing, unlike seasonal variations) of our planet. It dictates a massive portion of the global climate system and has significant socioeconomic influences. It primarily oscillates between three states:
@@ -104,5 +105,15 @@ class trainer()
 The first class and the second class is a conventional torch set up, the third class is a custom class that automates directory creation, custom real-time loss plot generation(in the output folder). Start training by:
 
 ```
-make trainOscNet:
+make trainOscNet
+```
+
+## AI Disclaimer
+`Claude Code` writes code for the shallow water simulator and all scripts written by it is flagged with 
+```
+---------------------------------
+BY : Claude Code
+Prompted/Reviewed BY: Haoyu Tang
+Github : Jerry_Haoyu 
+---------------------------------
 ```
