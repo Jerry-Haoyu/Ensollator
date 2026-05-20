@@ -40,18 +40,18 @@ if __name__ == "__main__":
     n_worers = mp.cpu_count()
     
     #### Sampling Density #####
-    N_deltas = 5
-    N_as = 5
-    N_bs = 5
-    N_rs = 5
+    N_deltas = 30
+    N_as = 30
+    N_bs = 30
+    N_rs = 30
     ###########################
     
     params_list = []
     N=0
     for delta in np.linspace(200.0, 500.0, N_deltas):
-        for a in np.linspace(1e-2, 0.99, N_as):
-            for b in np.linspace(1e-3, 1e-2, N_bs):
-                for r in np.linspace(1e-3, 1e-2, N_rs):
+        for a in np.linspace(1e-2, 10.0, N_as):
+            for b in np.linspace(1e-3, 1.0, N_bs):
+                for r in np.linspace(1e-3, 1e-1, N_rs):
                     alpha = b/a 
                     delta_hat = a * delta
                     if oscillation_check(alpha, delta_hat):

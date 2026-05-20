@@ -30,8 +30,8 @@ class oscNetData(Dataset):
                     _ = data_np['params'] 
                     
                     sample = {
-                        "params" : torch.tensor(data_np['params'], requires_grad=True),
-                        "data" : torch.tensor(data_np['data'], requires_grad=True),
+                        "params" : torch.tensor(data_np['params'], dtype=torch.float32),
+                        "data" : torch.tensor(data_np['data'], dtype=torch.float32),
                     }
                     
                     if (data_np['dt'] != self.dt and self.dt != -1): # i.e. dt is already initialized and differs with data_np['dt']
@@ -49,7 +49,7 @@ class oscNetData(Dataset):
 
         if(good_data < num_data) : print(f"[oscNetData] ==WARNING== DataSet has a yield of {good_data/num_data}, i.e., some are corrupted")
         
-        self.len = num_data 
+        self.len = good_data
 
     def get_dt(self):
         return self.dt
@@ -70,6 +70,9 @@ def inpsect_random_sample():
     
     train_loader = DataLoader(train_dataset, batch_size=1, shuffle=True)
     test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False)
+    
+    print(f"size of train_loader is {len(train_loader)}")
+    print(f"size of test_loader is {len(test_loader)}")
 
     random_sample = next(iter(train_loader))
     print(f"𝚯: a={random_sample['params'][0][0]}, \
@@ -77,6 +80,7 @@ def inpsect_random_sample():
           r={random_sample['params'][0][2]}, \
           delta={random_sample['params'][0][3]}")
     dt =  ds.get_dt()
+    
     
     total_steps = ds.get_totalsteps()
     
