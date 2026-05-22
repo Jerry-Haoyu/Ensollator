@@ -1,7 +1,7 @@
 # Ensollator 
 
 
-<!-- ## Project Description 
+ ## Project Description 
 ### The Climate Context
 The El Niño Southern Oscillation (ENSO) is a unique and prominent intrinsic variability (i.e., free of external forcing, unlike seasonal variations) of our planet. It dictates a massive portion of the global climate system and has significant socioeconomic influences. It primarily oscillates between three states:
 
@@ -56,7 +56,7 @@ This task can easily be formulated as a non-linear least-squares problem. In the
 
  > **Definition**: (BVP Parameter Map) Denote a family of BVPs, each specified by a family of parameters $\{\Pi(\boldsymbol\xi)\}, \boldsymbol{\xi} \in \mathbb{R}^k$. Let $F: \mathbb{R}^k \to \mathbb{R}^4$ be the map that connects the BVP $\Pi$ to the oscillation parameters $\tilde \Theta$ of the best $S$-moment approximator.
 
-An example of parameters $\boldsymbol{\xi}$ characterizing the BVP in the ENSO shallow-water model might be $(r, \alpha)$—the strength of the air-sea coupling. However, this mapping can go further to parametrize initial conditions, boundary conditions, and external forcings.Studying $F$ is incredibly valuable because many parameters in the shallow-water model do not have a clear, direct translation to overall oscillatory behavior. For instance, the relationship of basin width to the strength of positive feedback, negative feedback, and damping is typically quite opaque.More generally, finding a direct functional relationship that maps the parameters of the shallow-water model ($\boldsymbol{\xi}$) to the oscillation parameters ($\Theta$) translates the state of a higher-dimensional climate system into a simple, robust, and concise description of oscillatory behavior. -->
+An example of parameters $\boldsymbol{\xi}$ characterizing the BVP in the ENSO shallow-water model might be $(r, \alpha)$—the strength of the air-sea coupling. However, this mapping can go further to parametrize initial conditions, boundary conditions, and external forcings.Studying $F$ is incredibly valuable because many parameters in the shallow-water model do not have a clear, direct translation to overall oscillatory behavior. For instance, the relationship of basin width to the strength of positive feedback, negative feedback, and damping is typically quite opaque.More generally, finding a direct functional relationship that maps the parameters of the shallow-water model ($\boldsymbol{\xi}$) to the oscillation parameters ($\Theta$) translates the state of a higher-dimensional climate system into a simple, robust, and concise description of oscillatory behavior.
 
 
 # Repo Structure 
